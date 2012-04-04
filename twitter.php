@@ -8,6 +8,10 @@
  * The class is documented in the file itself. If you find any bugs help me out and report them. Reporting can be done by sending an email to php-twitter-bugs[at]verkoyen[dot]eu.
  * If you report a bug, make sure you give me enough information (include your code).
  *
+ * Changelog since 2.1.2
+ * - update a few list endpoints to use non-deprectated calls:
+ * - - userListsCreate() -> /lists/create.json
+ *
  * Changelog since 2.1.1
  * - code styling
  * - no more converting to integer for the cursor (thx to Jamaica)
@@ -51,8 +55,8 @@
  *
  * This software is provided by the author "as is" and any express or implied warranties, including, but not limited to, the implied warranties of merchantability and fitness for a particular purpose are disclaimed. In no event shall the author be liable for any direct, indirect, incidental, special, exemplary, or consequential damages (including, but not limited to, procurement of substitute goods or services; loss of use, data, or profits; or business interruption) however caused and on any theory of liability, whether in contract, strict liability, or tort (including negligence or otherwise) arising in any way out of the use of this software, even if advised of the possibility of such damage.
  *
- * @author		Tijs Verkoyen <php-twitter@verkoyen.eu>
- * @version		2.1.2
+ * @author		Tijs Verkoyen <php-twitter@verkoyen.eu> ( & Jim Morrison <jim@aninteractive.com> )
+ * @version		2.1.3
  *
  * @copyright	Copyright (c) 2010, Tijs Verkoyen. All rights reserved.
  * @license		BSD License
@@ -1563,7 +1567,7 @@ class Twitter
 		if($description != null) $parameters['description'] = (string) $description;
 
 		// make the call
-		return (array) $this->doCall((string) $user . '/lists.json', $parameters, true, 'POST');
+		return (array) $this->doCall((string) '/lists/create.json', $parameters, true, 'POST');
 	}
 
 
