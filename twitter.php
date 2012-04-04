@@ -9,6 +9,7 @@
  * If you report a bug, make sure you give me enough information (include your code).
  *
  * Changelog since 2.1.2
+ * - fixed oAuth to allow "Sign In with Twitter" behaviour on previously authed apps.
  * - update a few list endpoints to use non-deprectated calls:
  * - - userListsCreate() -> /lists/create.json
  *
@@ -55,7 +56,8 @@
  *
  * This software is provided by the author "as is" and any express or implied warranties, including, but not limited to, the implied warranties of merchantability and fitness for a particular purpose are disclaimed. In no event shall the author be liable for any direct, indirect, incidental, special, exemplary, or consequential damages (including, but not limited to, procurement of substitute goods or services; loss of use, data, or profits; or business interruption) however caused and on any theory of liability, whether in contract, strict liability, or tort (including negligence or otherwise) arising in any way out of the use of this software, even if advised of the possibility of such damage.
  *
- * @author		Tijs Verkoyen <php-twitter@verkoyen.eu> ( & Jim Morrison <jim@aninteractive.com> )
+ *
+ * @author		Tijs Verkoyen <php-twitter@verkoyen.eu>  // 2.1.3 tweaks Jim Morrison <jim@aninteractive.com>
  * @version		2.1.3
  *
  * @copyright	Copyright (c) 2010, Tijs Verkoyen. All rights reserved.
@@ -1567,7 +1569,7 @@ class Twitter
 		if($description != null) $parameters['description'] = (string) $description;
 
 		// make the call
-		return (array) $this->doCall((string) '/lists/create.json', $parameters, true, 'POST');
+		return (array) $this->doCall((string) 'lists/create.json', $parameters, true, 'POST');
 	}
 
 
@@ -2734,15 +2736,13 @@ class Twitter
 	/**
 	 * Will redirect to the page to authorize the applicatione
 	 *
-	 * JM: Changed to /authenticate to allow thru-auth when app is already authed.
-	 *		.. works fine for us in place of two different calls ( see method below ).
-	 *
 	 * @return	void
 	 * @param	string	$token		The token.
 	 */
-	public function oAuthAuthorize($token)
+	public function oAuthAuthorize()
 	{
-		header('Location: ' . self::SECURE_API_URL . '/oauth/authenticate?oauth_token=' . $token);
+		## JM 2011.11.08 - Corrected from /authorize - otherwise you're constantly re-authing?  Odd.. 
+		header('Location: ' . self::SECURE_API_URL . '/oauth/authenticate?oauth_token=' . $this->oAuthToken);
 	}
 
 
