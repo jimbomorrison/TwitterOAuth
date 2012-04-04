@@ -2734,12 +2734,15 @@ class Twitter
 	/**
 	 * Will redirect to the page to authorize the applicatione
 	 *
+	 * JM: Changed to /authenticate to allow thru-auth when app is already authed.
+	 *		.. works fine for us in place of two different calls ( see method below ).
+	 *
 	 * @return	void
 	 * @param	string	$token		The token.
 	 */
 	public function oAuthAuthorize($token)
 	{
-		header('Location: ' . self::SECURE_API_URL . '/oauth/authorize?oauth_token=' . $token);
+		header('Location: ' . self::SECURE_API_URL . '/oauth/authenticate?oauth_token=' . $token);
 	}
 
 
